@@ -10,6 +10,7 @@
       show-checkbox
       :render-content="renderContent"
       @check-change="handleCheckChange"
+      @node-click="handleClick"
     >
     </el-tree>
   </div>
@@ -26,28 +27,34 @@ export default {
         children: [
           {
             id: 1,
-            label: "marker 111号",
-            position: [103.96, 30.63]
+            label: "marker1号 公司",
+            position: [103.977088,30.633617]
           },
           {
             id: 2,
-            label: "marker 222号",
+            label: "marker2号 动物园",
+            position: [104.105944,30.710045]
           },
           {
             id: 3,
-            label: "marker 333号",
+            label: "marker3号 德阳",
+            position: [104.396066,31.131464]
           },
           {
             id: 4,
-            label: "marker 444号",
+            label: "marker4号 西安",
+            position: [108.984753,34.253464]
+            
           },
           {
             id: 5,
-            label: "marker 555号",
+            label: "marker5号 河南",
+            position: [113.818912,34.796594]
           },
           {
             id: 6,
-            label: "marker 666号",
+            label: "marker6号 苏州",
+            position: [120.573269,31.363965]
           },
 
         ],
@@ -70,7 +77,10 @@ export default {
       this.nodes = this.$refs.tree.getCheckedNodes()
       console.log(this.nodes);
     },
-   
+
+    handleClick(){
+      console.log(this.$refs.tree.getCurrentNode());
+    }
   },
 
 };

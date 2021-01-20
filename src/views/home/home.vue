@@ -30,11 +30,11 @@
       <!-- 右边盒子，xxx容器 -->
       <div class="rightContainer">
         <div class="rightbox1 panel">
-          右边盒子，xxx容器
+            <temperature />
           <div class="panel-footer"></div>
         </div>
         <div class="rightbox2 panel">
-          右边下面盒子，xxx容器
+            <humidity />
           <div class="panel-footer"></div>
         </div>
       </div>
@@ -48,6 +48,8 @@ import DeviceShow from "../../components/devices/devices";
 import MyMap from "../../components/map/map";
 import ModeControl from "../../components/modeControl/mode-control";
 import ParamSet from "../../components/paramSet/param-set";
+import Temperature from "../../components/temperature/temperature";
+import Humidity from "../../components/humidity/humidity";
 import "./index.less";
 export default {
   components: {
@@ -55,7 +57,9 @@ export default {
     DeviceShow,
     MyMap,
     ModeControl,
-    ParamSet
+    ParamSet,
+    Temperature,
+    Humidity
   },
   data() {
     return {

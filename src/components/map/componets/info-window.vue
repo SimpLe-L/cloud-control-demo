@@ -66,3 +66,56 @@
   transform: scale(1.2);
 }
 </style>
+
+<!--
+
+
+<template>
+  <div class="app-main" :style="conheight">
+    <div style="height:100%;width:100%" id="container" width tabindex="0"></div>
+    <div class="search-div" >
+      <el-input id="tipInput" v-model="inputSearchVal" placeholder="请输入搜索地址">
+        <el-button slot="append" icon="el-icon-search" @click="searchKeyword"> 
+          搜索
+        </el-button>
+      </el-input>
+    </div>
+
+    <infoWindowComponent ref="infoWindowComponent"></infoWindowComponent>
+  </div>
+</template>
+<script>
+//引入组件页面
+import infoWindowComponent from '@/views/infoWindow/info.vue'
+export default {
+  name: 'mapDetail',
+  components:{
+    infoWindowComponent
+  },
+  /**
+	打开消息窗体
+	我这边实现的是点击marker事件后，弹出消息框
+	注：positionResult 为marker点击事件的 event
+  */
+
+  openInfo(positionResult){
+      var that = this
+      let infoWindow = new AMap.InfoWindow({
+          isCustom:true,
+          content: that.$refs.infoWindowComponent.$el, 
+          offset: new AMap.Pixel(0, -25)
+      });
+      infoWindow.open(this.map, positionResult.lnglat);
+      this.infoWindow = infoWindow;
+      // 调用组件方法，初始化组件页面的infoWindow等数据
+      that.$refs.infoWindowComponent.initialize({
+        overlay: positionResult.target,
+        infoWindow: that.infoWindow
+      });
+  }
+}
+
+</script>
+
+
+-->

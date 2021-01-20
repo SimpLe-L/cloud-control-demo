@@ -4,8 +4,9 @@ import router from './router';
 import store from './store';
 import './plugins/element.js';
 import * as api from './api/api';
-// import VueAMap from 'vue-amap';
+import * as echarts from 'echarts';
 
+Vue.prototype.$echarts = echarts;
 Vue.prototype.$http = api;
 
 new Vue({
