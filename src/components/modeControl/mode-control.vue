@@ -7,7 +7,7 @@
         :key="index"
         @click="modeActive(index)"
         :class="{ active: currentId === index }"
-      >      
+      >
         <control-item>
           <img slot="icon" :src="item.url" />
           <div slot="mode-text">{{ item.text }}</div>
@@ -19,7 +19,7 @@
 
 <script>
 import ControlItem from "./control-item.vue";
-import { useHooks } from '../../hooks/index';
+import { useHooks } from "../../hooks/index";
 export default {
   data() {
     return {
@@ -31,6 +31,10 @@ export default {
         },
         { url: require("../../assets/controlBar/blink.png"), text: "主动引导" },
         { url: require("../../assets/controlBar/crash.png"), text: "尾跟警示" },
+        {
+          url: require("../../assets/controlBar/saving.png"),
+          text: "节能模式",
+        },
         { url: require("../../assets/controlBar/close.png"), text: "关闭雾灯" },
       ],
       currentId: 0,
@@ -55,49 +59,49 @@ export default {
 .active {
   position: relative;
   border-radius: 10px;
-  transition: all .3s;
+  transition: all 0.3s;
 
-   &:hover {
-        filter: contrast(1.1);
-    }
-    
-    // &:active {
-    //     filter: contrast(0.9);
-    // }
-    
-    &::before,
-    &::after {
-        content: "";
-        position: absolute;
-        top: -10px;
-        left: -10px;
-        right: -10px;
-        bottom: -10px;
-        border: 2px solid gold;
-        transition: all .5s;
-        animation: clippath 3s infinite linear;
-        border-radius: 10px;
-    }
-    
-    &::after {
-        animation: clippath 3s infinite -1.5s linear;
-    }
+  &:hover {
+    filter: contrast(1.1);
+  }
+
+  // &:active {
+  //     filter: contrast(0.9);
+  // }
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    border: 2px solid gold;
+    transition: all 0.5s;
+    animation: clippath 3s infinite linear;
+    border-radius: 10px;
+  }
+
+  &::after {
+    animation: clippath 3s infinite -1.5s linear;
+  }
 }
 @keyframes clippath {
-    0%,
-    100% {
-        clip-path: inset(0 0 98% 0);
-    }
-    
-    25% {
-        clip-path: inset(0 98% 0 0);
-    }
-    50% {
-        clip-path: inset(98% 0 0 0);
-    }
-    75% {
-        clip-path: inset(0 0 0 98%);
-    }
+  0%,
+  100% {
+    clip-path: inset(0 0 98% 0);
+  }
+
+  25% {
+    clip-path: inset(0 98% 0 0);
+  }
+  50% {
+    clip-path: inset(98% 0 0 0);
+  }
+  75% {
+    clip-path: inset(0 0 0 98%);
+  }
 }
 
 .wrapper {
