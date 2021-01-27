@@ -1,69 +1,88 @@
 <template>
-  <div>
-    <el-card class="box-card" style="padding: 0 80 30 80;width: 400px;border-radius: 10px;">
-      <div id="del-div">
-        <el-link type="primary" icon="el-icon-close" @click="close()"></el-link>
+<div class="container">
+  <el-card shadow="never" :body-style="{ padding: '0px' }" >
+    <div class="wrapper">
+      <div class="header">
+        <span>路段名字啊啊啊</span>
       </div>
-      <div style="text-align: center;">
-        <h4>详 情</h4>
+      <div class="body">
+        <div class="pic">
+          <img src="@/assets/imgs/test.png" alt="">
+        </div>
+        <div class="infos">
+          <span>电量: 67%</span>
+          <span>模式：尾跟警示</span>
+          <span>亮度：50%</span>
+          <span>闪烁频率：60次/分</span>
+          <span>桩号：k22+300</span>
+        </div>
       </div>
-      <p v-if="isInfo">部署 : 测试一下</p>
-      <p v-if="isInfo">地点 : 测试一下2222</p>
-      <p v-if="isInfo">说明 : 测试一下111111</p>
-      <p v-if="!isInfo" style="text-align: center;color: #b3b3b3;">暂无信息</p>
-      <div id="infoWindowTool">
-        <el-link type="primary" @click="edit()">编辑</el-link>
-        <el-link type="primary" @click="del()">删除</el-link>
-      </div>
-    </el-card>
-    <div class="amap-info-sharp">
-      <i class="el-icon-caret-bottom"></i>
     </div>
-  </div>
+  </el-card>
+</div>
+
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        overlay: null,
-        infoWindow: null,
-        isInfo: true,
-      };
-    },
+export default {
+  data() {
+    return {};
+  },
 
-    methods: {
-      initialize(e) {
-        this.overlay = e.overlay;
-        this.infoWindow = e.infoWindow;
-      },
-      //关闭
-      close() {
-        this.infoWindow.close();
-      },
-      edit() {
-        console.log("编辑按钮测试");
-      },
-      del() {
-        console.log("删除按钮测试");
-      }
-    }
-  }
+  methods: {}
+};
 </script>
 
 <style lang="less" scoped>
-.amap-info-sharp {
-  bottom: -1px;
-  left: 48.5%;
+.container::after {
+  display: block;
+  content: '';
+  width: 0;
+  height: 0;
   position: absolute;
-  color: #fff;
-  z-index: -1;
+  bottom: 0;
+  left: 47%;
+  border-top: 10px solid #fff;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
 }
-#del-div {
-  position: absolute;
-  right: 20;
-  top: 20;
-  transform: scale(1.2);
+.wrapper {
+  width: 350px;
+  height: 200px;
+  background-color: #fff;
+  /deep/ .el-card__body{
+    padding: 0;
+  }
+  .header {
+    padding: 5px 12px;
+    border-bottom: 1px solid #adadad;
+  }
+  .body {
+    display: flex;
+    margin: 10px 0;
+    // height: 100%;
+    // overflow: hidden;
+    .pic {
+      width: 180px;
+      height: 150px;
+      margin-left: 10px;
+      margin-bottom: 10px;
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .infos {
+      height: 150px;
+      margin-left: 5px;
+      display: flex;
+      justify-content: space-between;
+      flex-direction: column;
+      >span {
+        display: block;
+      }
+    }
+  }
 }
 </style>
 
@@ -93,8 +112,6 @@ export default {
     infoWindowComponent
   },
   /**
-	打开消息窗体
-	我这边实现的是点击marker事件后，弹出消息框
 	注：positionResult 为marker点击事件的 event
   */
 

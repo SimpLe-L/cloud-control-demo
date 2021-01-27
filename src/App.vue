@@ -21,7 +21,7 @@ export default {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    box-sizing: border-box;
+    // box-sizing: border-box;
   }
 
 </style>

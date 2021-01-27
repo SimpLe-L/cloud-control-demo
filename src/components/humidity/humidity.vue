@@ -12,42 +12,46 @@
         // let myChart = this.$echarts.init(document.getElementById('linebox2'));
         let myChart = this.$echarts.init(this.$refs.linebox2);
         myChart.setOption({
+          title: {
+            text: '某站点用户访问来源',
+            // subtext: '纯属虚构',
+            left: 'center',
+            textStyle: {
+              color: '#fff'
+            }
+          },
           tooltip: {
-            trigger: 'item',
-            formatter: '{a} <br/>{b}: {c} ({d}%)'
+              trigger: 'item'
           },
           legend: {
-            // orient: 'vertical',
-            left: 1,
-            data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎']
+              orient: 'vertical',
+              left: 'left',
+              top: 30,
+              textStyle: {
+              color: '#fff'
+            }
           },
           series: [
             {
               name: '访问来源',
               type: 'pie',
-              radius: ['50%', '70%'],
-              avoidLabelOverlap: false,
-              label: {
-                  show: false,
-                  position: 'center'
-              },
+              radius: '50%',
+              top: 160,
+              data: [
+                  {value: 1048, name: '搜索引擎'},
+                  {value: 735, name: '直接访问'},
+                  {value: 580, name: '邮件营销'},
+                  {value: 484, name: '联盟广告'},
+                  {value: 300, name: '视频广告'}
+              ],
               emphasis: {
-                  label: {
-                      show: true,
-                      fontSize: '30',
-                      fontWeight: 'bold'
+                  itemStyle: {
+                      shadowBlur: 10,
+                      shadowOffsetX: 0,
+                      shadowColor: 'rgba(0, 0, 0, 0.5)'
                   }
               },
-              labelLine: {
-                  show: false
-              },
-              data: [
-                  {value: 335, name: '直接访问'},
-                  {value: 310, name: '邮件营销'},
-                  {value: 234, name: '联盟广告'},
-                  {value: 135, name: '视频广告'},
-                  {value: 1548, name: '搜索引擎'}
-              ]
+        
             }
           ]
         })
@@ -59,6 +63,14 @@
   }
 </script>
 
-<style lang="scss" scoped>
-
+<style lang="less" scoped>
+.wrapper {
+  // width: 100%;
+  // height: 100%;
+  .title {
+    display: block;
+    text-align: center;
+    // margin: 5px;
+  }
+}
 </style>

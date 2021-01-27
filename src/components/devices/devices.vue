@@ -13,11 +13,14 @@
       @node-click="handleClick"
     >
     </el-tree>
+    
   </div>
 </template>
 
 <script>
+import { useHooks } from '../../hooks/index';
 export default {
+  
   data() {
     return {
       data: [
@@ -60,6 +63,7 @@ export default {
         ],
       },
     ],
+      posi: [],
       nodes: []
     };
   },
@@ -73,14 +77,22 @@ export default {
       );
     },
     handleCheckChange() {
+      const { get_ipArray } = useHooks();
+      this.nodes = this.$refs.tree.getCheckedNodes();
+      get_ipArray(this.nodes);
+      // this.$store.dispatch('GET_IPARRAY', this.nodes);
       // this.nodes = this.$refs.tree.getCheckedNodes().concat(this.$refs.tree.getHalfCheckedNodes());
-      this.nodes = this.$refs.tree.getCheckedNodes()
-      console.log(this.nodes);
+
     },
 
     handleClick(){
-      console.log(this.$refs.tree.getCurrentNode());
-    }
+      const { set_curPosition } = useHooks();
+      let node = this.$refs.tree.getCurrentNode();
+      // this.posi = node.position;
+      set_curPosition(node.position);
+      // this.$store.dispatch('SET_CURPOSITION', this.posi);
+
+    },
   },
 
 };

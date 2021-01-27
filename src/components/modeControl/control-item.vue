@@ -3,9 +3,6 @@
     <div class="icon">
       <slot name="icon"></slot>
     </div>
-    <!-- <div class="icon-active">
-      <slot name="icon-active"></slot>
-    </div> -->
     <div class="mode-text">
       <slot name="mode-text"></slot>
     </div>
@@ -24,9 +21,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.item-active {
-  background-color: green;
-}
 .wrapper {
   cursor: pointer;
   padding: 5px;

@@ -6,9 +6,8 @@
         v-for="(item, index) in items"
         :key="index"
         @click="modeActive(index)"
-        
-      >
-      <!-- :class="{ active: currentId === index }" -->
+        :class="{ active: currentId === index }"
+      >      
         <control-item>
           <img slot="icon" :src="item.url" />
           <div slot="mode-text">{{ item.text }}</div>
@@ -20,6 +19,7 @@
 
 <script>
 import ControlItem from "./control-item.vue";
+import { useHooks } from '../../hooks/index';
 export default {
   data() {
     return {
@@ -39,6 +39,10 @@ export default {
   methods: {
     modeActive(index) {
       this.currentId = index;
+      const { set_mode } = useHooks();
+      set_mode(index);
+      // this.currentId = index;
+      // this.$store.dispatch('SET_CURMODE', index);
     },
   },
   components: {
@@ -49,8 +53,53 @@ export default {
 
 <style lang="less" scoped>
 .active {
-  background-color: green;
+  position: relative;
+  border-radius: 10px;
+  transition: all .3s;
+
+   &:hover {
+        filter: contrast(1.1);
+    }
+    
+    // &:active {
+    //     filter: contrast(0.9);
+    // }
+    
+    &::before,
+    &::after {
+        content: "";
+        position: absolute;
+        top: -10px;
+        left: -10px;
+        right: -10px;
+        bottom: -10px;
+        border: 2px solid gold;
+        transition: all .5s;
+        animation: clippath 3s infinite linear;
+        border-radius: 10px;
+    }
+    
+    &::after {
+        animation: clippath 3s infinite -1.5s linear;
+    }
 }
+@keyframes clippath {
+    0%,
+    100% {
+        clip-path: inset(0 0 98% 0);
+    }
+    
+    25% {
+        clip-path: inset(0 98% 0 0);
+    }
+    50% {
+        clip-path: inset(98% 0 0 0);
+    }
+    75% {
+        clip-path: inset(0 0 0 98%);
+    }
+}
+
 .wrapper {
   .title {
     // width: 100%;
