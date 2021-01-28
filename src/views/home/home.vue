@@ -9,7 +9,7 @@
           <div class="panel-footer"></div>
         </div>
         <div class="leftbox2 panel">
-            <param-set />
+          <param-set />
           <div class="panel-footer"></div>
         </div>
       </div>
@@ -30,11 +30,11 @@
       <!-- 右边盒子，xxx容器 -->
       <div class="rightContainer">
         <div class="rightbox1 panel">
-            <temperature />
+          <temperature />
           <div class="panel-footer"></div>
         </div>
         <div class="rightbox2 panel">
-            <humidity />
+          <humidity />
           <div class="panel-footer"></div>
         </div>
       </div>
@@ -50,6 +50,8 @@ import ModeControl from "../../components/modeControl/mode-control";
 import ParamSet from "../../components/paramSet/param-set";
 import Temperature from "../../components/temperature/temperature";
 import Humidity from "../../components/humidity/humidity";
+import { getDevice, getInfos } from "../../utils/utils";
+
 import "./index.less";
 export default {
   components: {
@@ -59,58 +61,52 @@ export default {
     ModeControl,
     ParamSet,
     Temperature,
-    Humidity
+    Humidity,
   },
   data() {
-    return {
-
-    };
+    return {};
   },
 
   methods: {
-    async getAllDevice(){
-      // let tempArr = [];
-      const data = await this.$http.getAllDevice();
+    async getAllInfos() {
+      let arr = [];
+      let data = await getDevice();
       let { devices } = data.data;
-      let tempArr = devices.map((item, index) => {
-        return parseInt(item.id);
-      })
-      console.log(tempArr);
-    },
-    async getInfos(id){
-        const params = {
-          deviceId: id,
-          dataId: 'mode,level,latitude,blink,longitude,voltage',
-          limit: 1
+      devices.forEach((item, index) => {
+        if (item.online) {
+          arr.push(getInfos(item.id));
         }
-        let res = await this.$http.getDeviceData(params);
-        return res;
-      },
-      // async getInfos(id){
-      //   const params = {
-      //     deviceId: id,
-      //     dataId: 'mode,level,latitude,blink,longitude,voltage',
-      //     limit: 1
-      //   }
-      //   let res = await this.$http.getDeviceData(params);
-      //   return res;
-      // },
+        // console.log(item);
+      });
+      Promise.all(arr).then((res) => {
+        console.log(res);
+      });
+    },
+    // async getInfos(id){
+    //   const params = {
+    //     deviceId: id,
+    //     dataId: 'mode,level,latitude,blink,longitude,voltage',
+    //     limit: 1
+    //   }
+    //   let res = await this.$http.getDeviceData(params);
+    //   return res;
+    // },
 
-  //     axios.get('/userAll').then( async response {
-  //   //要同步这个方法
-  //   await axios.get('/user?ID=12345').then(function (response) {
-  //       console.log(response);
-  //     }).catch(function (error) {
-  //       console.log(error);
-  //     });
-  // }).catch(function (error) {
-  //   console.log(error);
-  // });
+    //     axios.get('/userAll').then( async response {
+    //   //要同步这个方法
+    //   await axios.get('/user?ID=12345').then(function (response) {
+    //       console.log(response);
+    //     }).catch(function (error) {
+    //       console.log(error);
+    //     });
+    // }).catch(function (error) {
+    //   console.log(error);
+    // });
     async getDevice() {
-      const pid = 'ML302';
+      const pid = "ML302";
       const data = await this.$http.getDevice(pid);
-      console.log(data)
-      let { device_id , name} = data.data;
+      console.log(data);
+      let { device_id, name } = data.data;
       console.log(name);
       console.log(device_id);
 
@@ -122,7 +118,6 @@ export default {
       //   pid: 371437
       // }
 
-
       // data
       //   .then(({ data }) => {
       //     console.log(data)
@@ -133,31 +128,13 @@ export default {
       //   .catch(err => {
       //     console.log(err.data)
       //   })
-
     },
-    async getPosition(){
-      // 设备经度
-      const longParams = {
-        deviceId: 671340176,
-        dataId: 'longitude',
-        limit: 1
-      }
-      // 设备纬度
-      const latParams = {
-        deviceId: 671340176,
-        dataId: 'latitude',
-        limit: 1
-      }
-      let res1 = await this.$http.getDeviceData(longParams);
-      console.log('设备经度：',res1);  
-      let res2 = await this.$http.getDeviceData(latParams);
-      console.log('设备纬度：',res2);  
-    }
   },
-  created(){
-    this.getAllDevice();
+  created() {
+    // this.getAllDevice();
     // this.getPosition();
-  }
+    this.getAllInfos();
+  },
 };
 </script>
 

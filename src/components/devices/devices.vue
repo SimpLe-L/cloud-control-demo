@@ -13,59 +13,55 @@
       @node-click="handleClick"
     >
     </el-tree>
-    
   </div>
 </template>
 
 <script>
-import { useHooks } from '../../hooks/index';
-import { getAllDevice } from '../../api/api';
+import { useHooks } from "../../hooks/index";
+import { getAllDevice } from "../../api/api";
 export default {
-  
   data() {
     return {
       data: [
-      {
-        id: 1,
-        label: "设备列表",
-        children: [
-          {
-            id: 1,
-            label: "marker1号 公司",
-            position: [103.977088,30.633617]
-          },
-          {
-            id: 2,
-            label: "marker2号 动物园",
-            position: [104.105944,30.710045]
-          },
-          {
-            id: 3,
-            label: "marker3号 德阳",
-            position: [104.396066,31.131464]
-          },
-          {
-            id: 4,
-            label: "marker4号 西安",
-            position: [108.984753,34.253464]
-            
-          },
-          {
-            id: 5,
-            label: "marker5号 河南",
-            position: [113.818912,34.796594]
-          },
-          {
-            id: 6,
-            label: "marker6号 苏州",
-            position: [120.573269,31.363965]
-          },
-
-        ],
-      },
-    ],
+        {
+          id: 1,
+          label: "设备列表",
+          children: [
+            {
+              id: 1,
+              label: "marker1号 公司",
+              position: [103.977088, 30.633617],
+            },
+            {
+              id: 2,
+              label: "marker2号 动物园",
+              position: [104.105944, 30.710045],
+            },
+            {
+              id: 3,
+              label: "marker3号 德阳",
+              position: [104.396066, 31.131464],
+            },
+            {
+              id: 4,
+              label: "marker4号 西安",
+              position: [108.984753, 34.253464],
+            },
+            {
+              id: 5,
+              label: "marker5号 河南",
+              position: [113.818912, 34.796594],
+            },
+            {
+              id: 6,
+              label: "marker6号 苏州",
+              position: [120.573269, 31.363965],
+            },
+          ],
+        },
+      ],
       posi: [],
-      nodes: []
+      nodes: [],
     };
   },
 
@@ -78,26 +74,24 @@ export default {
       );
     },
     handleCheckChange() {
-      const { get_ipArray } = useHooks();
+      const { get_idArray } = useHooks();
       this.nodes = this.$refs.tree.getCheckedNodes();
-      get_ipArray(this.nodes);
-      // this.$store.dispatch('GET_IPARRAY', this.nodes);
+      get_idArray(this.nodes);
+      // this.$store.dispatch('GET_idArray', this.nodes);
       // this.nodes = this.$refs.tree.getCheckedNodes().concat(this.$refs.tree.getHalfCheckedNodes());
-
     },
 
-    handleClick(){
+    handleClick() {
       const { set_curPosition } = useHooks();
       let node = this.$refs.tree.getCurrentNode();
       // this.posi = node.position;
       set_curPosition(node.position);
       // this.$store.dispatch('SET_CURPOSITION', this.posi);
-
     },
   },
-  created(){
+  created() {
     // getAllDevice();
-  }
+  },
 };
 </script>
 
