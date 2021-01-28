@@ -6,6 +6,7 @@ import './plugins/element.js';
 import * as api from './api/api';
 import * as echarts from 'echarts';
 
+
 Vue.prototype.$echarts = echarts;
 Vue.prototype.$http = api;
 

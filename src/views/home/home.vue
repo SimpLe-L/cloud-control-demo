@@ -68,6 +68,44 @@ export default {
   },
 
   methods: {
+    async getAllDevice(){
+      // let tempArr = [];
+      const data = await this.$http.getAllDevice();
+      let { devices } = data.data;
+      let tempArr = devices.map((item, index) => {
+        return parseInt(item.id);
+      })
+      console.log(tempArr);
+    },
+    async getInfos(id){
+        const params = {
+          deviceId: id,
+          dataId: 'mode,level,latitude,blink,longitude,voltage',
+          limit: 1
+        }
+        let res = await this.$http.getDeviceData(params);
+        return res;
+      },
+      // async getInfos(id){
+      //   const params = {
+      //     deviceId: id,
+      //     dataId: 'mode,level,latitude,blink,longitude,voltage',
+      //     limit: 1
+      //   }
+      //   let res = await this.$http.getDeviceData(params);
+      //   return res;
+      // },
+
+  //     axios.get('/userAll').then( async response {
+  //   //要同步这个方法
+  //   await axios.get('/user?ID=12345').then(function (response) {
+  //       console.log(response);
+  //     }).catch(function (error) {
+  //       console.log(error);
+  //     });
+  // }).catch(function (error) {
+  //   console.log(error);
+  // });
     async getDevice() {
       const pid = 'ML302';
       const data = await this.$http.getDevice(pid);
@@ -100,24 +138,24 @@ export default {
     async getPosition(){
       // 设备经度
       const longParams = {
-        deviceId: 628579624,
+        deviceId: 671340176,
         dataId: 'longitude',
         limit: 1
       }
       // 设备纬度
       const latParams = {
-        deviceId: 628579624,
+        deviceId: 671340176,
         dataId: 'latitude',
         limit: 1
       }
       let res1 = await this.$http.getDeviceData(longParams);
-      console.log(res1);  
+      console.log('设备经度：',res1);  
       let res2 = await this.$http.getDeviceData(latParams);
-      console.log(res2);  
+      console.log('设备纬度：',res2);  
     }
   },
   created(){
-    // this.getDevice();
+    this.getAllDevice();
     // this.getPosition();
   }
 };

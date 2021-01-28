@@ -1,5 +1,8 @@
 import axios from './http';
 
+const getAllDevice = () => {
+  return axios.get(`/devices`);
+}
 // 查询设备
 const getDevice = deviceName => {
   return axios.get(`/mqtt/v1/devices/${deviceName}`);
@@ -18,7 +21,8 @@ const updateDevice = deviceId => {
 }
 // 设备命令 POST /v1/synccmds?device_id=524092364&timeout=30
 const setDevice = params => {
-  return axios.post('/v1/synccmds?device_id=628579624&timeout=10', params);
+  // return axios.post('/v1/synccmds?device_id=628579624&timeout=10', params);
+  return axios.post(`/v1/synccmds?device_id=${params.id}&timeout=10`, params)
 }
 // 查询设备镜像 GET /mqtt/v1/devices/{device_id}/image
 
@@ -28,8 +32,8 @@ const setDevice = params => {
 const getDeviceData = params => {
   return axios.get(
     `/devices/${params.deviceId}/datapoints?datastream_id=${params.dataId}&
-    start=2020-09-01T00:00:00&limit=${params.limit}`
+    start=2021-01-01T00:00:00&limit=${params.limit}`
   );
 }
 
-export { getDevice, getDeviceData, setDevice }
+export { getDevice, getDeviceData, setDevice, getAllDevice }

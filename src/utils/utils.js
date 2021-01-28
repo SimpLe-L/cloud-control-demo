@@ -20,3 +20,11 @@ export function timeFormat() {
       // _this.gettime = yy + "-" + mm + "-" + dd + " " + hh + ":" + mf + ":" + ss;
       return `${yy}年${mm}月${dd}日 ${hh}:${mf}:${ss}`
 }
+
+export function paramSet(options){
+
+}
+
+export function test(){
+  
+}

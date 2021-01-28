@@ -62,7 +62,7 @@ if (process.env.NODE_ENV === 'development') {
  * 请求拦截器
  * 每次请求前，如果存在token则在请求头中携带token
  */
-instance.interceptors.request.use(
+axios.interceptors.request.use(
   config => {
     // 登录流程控制中，根据本地是否存在token判断用户的登录情况
     // 但是即使token存在，也有可能token是过期的，所以在每次的请求头中携带token
@@ -79,7 +79,7 @@ instance.interceptors.request.use(
 )
 
 // 响应拦截器
-instance.interceptors.response.use(
+axios.interceptors.response.use(
   // 请求成功
   res => (res.status === 200 ? Promise.resolve(res.data) : Promise.reject(res)),
   // 请求失败
@@ -102,7 +102,7 @@ instance.interceptors.response.use(
   }
 )
 
-export default instance;
+export default axios;
 // Authorization:
 // version=2020-9-20&
 // res=products%373904&

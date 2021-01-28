@@ -19,6 +19,7 @@
 
 <script>
 import { useHooks } from '../../hooks/index';
+import { getAllDevice } from '../../api/api';
 export default {
   
   data() {
@@ -94,7 +95,9 @@ export default {
 
     },
   },
-
+  created(){
+    // getAllDevice();
+  }
 };
 </script>
 
