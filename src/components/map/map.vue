@@ -18,6 +18,7 @@ export default {
       map: null,
       showInfos: null,
       flag: false,
+      test: JSON.parse(localStorage.getItem('devicesList')),
       positions: [
         { label: "marker1号 公司", position: { x: 103.977088, y: 30.633617 } },
         {
@@ -27,7 +28,7 @@ export default {
         { label: "marker3号 德阳", position: { x: 104.396066, y: 31.131464 } },
         { label: "marker4号 西安", position: { x: 108.984753, y: 34.253464 } },
         { label: "marker5号 河南", position: { x: 113.818912, y: 34.796594 } },
-        { label: "marker6号 苏州", position: { x: 120.573269, y: 31.363965 } }
+        { label: "marker6号 苏州", position: { x: 120.573269, y: 31.363965 } },
       ]
     };
   },
@@ -55,9 +56,22 @@ export default {
     // 地图上添加标记点
     addPosition() {
       let list = [];
-      this.positions.forEach((item, index) => {
+      // 测试用
+      // this.positions.forEach((item) => {
+      //   let temp = new AMap.Marker({
+      //     position: new AMap.LngLat(item.position.x, item.position.y),
+      //     icon: "https://webapi.amap.com/theme/v1.3/markers/n/mark_b.png",
+      //     title: `${item.label}`
+      //   });
+      //   temp.on("mouseover", this.showInfo);
+      //   temp.on("mouseout", this.infoClose);
+        
+      //   list.push(temp);
+      // });
+
+      this.test.forEach((item) => {
         let temp = new AMap.Marker({
-          position: new AMap.LngLat(item.position.x, item.position.y),
+          position: new AMap.LngLat(item.longitude, item.latitude),
           icon: "https://webapi.amap.com/theme/v1.3/markers/n/mark_b.png",
           title: `${item.label}`
         });
@@ -88,6 +102,10 @@ export default {
       });
 
       _this.showInfos.open(this.map, e.target.getPosition());
+      _this.$refs.InfoWindow.initialize({
+        infowindow: _this.showInfos,
+        tar: e.target
+      });
     },
     infoClose(){
       let _this = this;

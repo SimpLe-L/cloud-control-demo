@@ -10,7 +10,7 @@ export default {
   [GET_idArray](commit, arr) {
     commit.commit(GET_idArray, arr);
   },
-  [GET_ALLINFOS](commit, arr) {
-    commit.commit(GET_ALLINFOS, arr);
+  [GET_ALLINFOS](commit, array) {
+    commit.commit(GET_ALLINFOS, array);
   }
 }

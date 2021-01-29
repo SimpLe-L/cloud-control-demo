@@ -26,6 +26,7 @@
 </template>
 
 <script>
+import { setParam } from '../../utils/utils';
   export default {
      data(){
       return {
@@ -61,18 +62,36 @@
       this.currentId = index;
     },
     clickBtn(){
-      let param = {
-        "cmd": 1002,
-        "id": 66666,
-        "buff":{
-          "mode": 1,
-          "param": {
-            "level": this.lightness,
-            "gp": this.currentId + 1              //1--红  2--黄  3--红黄
+
+      let ids = this.$store.state.idArray;
+      ids.forEach(element => {
+        let param = {
+          id: parseInt(element.id),
+          data:{
+            "cmd": 1002,
+            "id": parseInt(element.id_control),
+            "buff":{
+              "mode": 1,
+              "param": {
+                "level": this.lightness, 
+                "gp": this.currentId + 1              //1--红  2--黄  3--红黄 绿   实测·
+              }
+          }
           }
         }
-      }
-      console.log(param);
+        console.log(param);
+        // setParam(param);
+        this.$http.setDevice(param);
+      });
+      // 669681003
+      
+      // setParam(param);
+
+      // let res = this.$http.setDevice(param);
+      // res.then(res => {
+      //   console.log(res);
+      // })
+      // console.log(param);
       this.$notify({
         title: '成功',
         message: '设置成功~',

@@ -1,4 +1,5 @@
-import { getDeviceData, getAllDevice } from '../api/api';
+import { Option } from 'element-ui';
+import { getDeviceData, getAllDevice, setDevice } from '../api/api';
 import store from '../store';
 
 //时间格式化
@@ -43,53 +44,77 @@ function getDevice() {
 }
 //数组扁平化
 function flat(arr) {
-  let temp = [];
+  let temp = []; 
   arr.forEach((item) => {
-    item.data.forEach((item) => {
-      item.datastreams.forEach((item) => {
-        let valArr = item.datapoints;
+    item.data.datastreams.forEach((item, index) => {
+      let str = `{"${item.id}":"${item.datapoints[0].value}"}`;
 
-        temp.push(
-          {
-            id: item.id,
-            value: item.datapoints
-          }
-        )
-      })
+      // temp.push(`{"${item.id}":"${item.datapoints[0].value}"}`)
+      temp.push(JSON.parse(str));
     })
   })
+  let splitArr = (len, arr) => {
+    let res = [],
+        index;
+    for (index = 0; index < arr.length;) {
+      res.push(arr.slice(index, index += len)); 
+    }
+    return res;
+  }
+  let final = splitArr(6, temp);
+  let test = final.map((item)=>{
+    return Object.assign({},...item)
+  })
+  return test;
+}
+//合并数据
+function merge(arr, arr2){
+  let mergeObj = arr.map((item, index) => {
+    return {...item, ...arr2[index]};
+  })
+  return mergeObj;
+}
+//参数设置
+function setParam(){
+  let setMode = {
+    id: 669681003,
+    data: {
+      "cmd":1000,
+      "id": 1190967555,
+      "buff":{
+        "mode": 1
+      }
+    }
+  }
+  try {
+    setDevice(setMode).then(res => {
+      console.log('模式成功',res);
+     
+    })
+  } catch (error) {
+    console.log(error);
+  }
+
 }
 
 //设置模式
-function setMode() {
-  let cur = store.state.curMode;
+function setMode(){
 
-  switch (cur) {
-    case 0:
-      //自动模式
-      break;
-    case 1:
-      //轮廓强化
-
-      break;
-    case 2:
-      //主动诱导
-      break;
-    case 3:
-      //自动模式
-      break;
-    case 4:
-      //自动模式
-      break;
-    default:
-      break;
+  try {
+    setDevice(setMode).then(res => {
+      console.log('模式成功',res);
+     
+    })
+  } catch (error) {
+    console.log(error);
   }
 }
-
 
 export {
   timeFormat,
   getInfos,
   getDevice,
-  setMode
+  flat,
+  merge,
+  setParam
 }

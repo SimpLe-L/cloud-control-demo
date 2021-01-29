@@ -37,7 +37,8 @@
 </template>
 
 <script>
-import axios from "axios";
+import { setParam } from '../../utils/utils';
+
 export default {
   data() {
     return {
@@ -86,9 +87,10 @@ export default {
 
   methods: {
     clickBtn() {
-      this.getAllDevice();
-
+      // this.getAllDevice();
+      // console.log(this.$store.state.allInfos);
       // this.getInfos(669681003);
+      setParam();
     },
     // async getAllDevice(){
     //   const data = await this.$http.getAllDevice();

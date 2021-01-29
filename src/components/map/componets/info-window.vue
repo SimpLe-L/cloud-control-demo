@@ -26,10 +26,24 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      voltage: 0,
+      tar: null,
+      infowindow: null
+    };
   },
 
-  methods: {}
+  methods: {
+    initialize(e){
+      this.tar = e.target;
+      this.infowindow = e.infowindow;
+      console.log('111',this.tar);
+      console.log('222',this.infowindow);
+    }
+  },
+  mounted(){
+    // this.initialize()
+  }
 };
 </script>
 

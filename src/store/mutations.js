@@ -10,7 +10,8 @@ export default {
   [GET_idArray](state, arr) {
     state.idArray = arr;
   },
-  [GET_ALLINFOS](state, arr) {
-    state.allInfos = arr;
+  [GET_ALLINFOS](state, array) {
+    // console.log(arr);
+    state.allInfos = array;
   }
 }

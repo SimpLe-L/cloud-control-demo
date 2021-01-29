@@ -50,7 +50,8 @@ import ModeControl from "../../components/modeControl/mode-control";
 import ParamSet from "../../components/paramSet/param-set";
 import Temperature from "../../components/temperature/temperature";
 import Humidity from "../../components/humidity/humidity";
-import { getDevice, getInfos } from "../../utils/utils";
+import { getDevice, getInfos, flat, merge } from "../../utils/utils";
+import { useHooks } from '../../hooks/index';
 
 import "./index.less";
 export default {
@@ -64,22 +65,37 @@ export default {
     Humidity,
   },
   data() {
-    return {};
+    return {
+      allDeviceInfo: []
+    };
   },
 
   methods: {
     async getAllInfos() {
-      let arr = [];
+      let arr = [],
+          arr2 = [];
       let data = await getDevice();
       let { devices } = data.data;
       devices.forEach((item, index) => {
-        if (item.online) {
-          arr.push(getInfos(item.id));
-        }
         // console.log(item);
+        if (item.online) {
+          let temp = {
+            id: item.id,
+            label: item.title
+          };
+          arr.push(getInfos(item.id));
+          arr2.push(temp);
+        }
       });
+      // console.log( this.deviceInfo);
       Promise.all(arr).then((res) => {
-        console.log(res);
+        const { get_allInfos } = useHooks();
+        let arr = flat(res);
+        let allDeviceInfo = merge(arr, arr2);
+        localStorage.setItem('devicesList', JSON.stringify(allDeviceInfo));
+        // localStorage.setItem('devicesList', allDeviceInfo);
+        // get_allInfos(allDeviceInfo);
+        // console.log(this.$store.state.allInfos);
       });
     },
     // async getInfos(id){
@@ -131,10 +147,12 @@ export default {
     },
   },
   created() {
-    // this.getAllDevice();
-    // this.getPosition();
     this.getAllInfos();
+    // this.getPosition();
   },
+  mounted(){
+    // this.getAllInfos();
+  }
 };
 </script>
 

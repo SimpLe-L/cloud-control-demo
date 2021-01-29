@@ -18,7 +18,7 @@
 
 <script>
 import { useHooks } from "../../hooks/index";
-import { getAllDevice } from "../../api/api";
+
 export default {
   data() {
     return {
@@ -26,6 +26,8 @@ export default {
         {
           id: 1,
           label: "设备列表",
+          
+          // children: this.$store.state.allInfos
           children: [
             {
               id: 1,
@@ -57,6 +59,7 @@ export default {
               label: "marker6号 苏州",
               position: [120.573269, 31.363965],
             },
+            ...JSON.parse(localStorage.getItem('devicesList'))
           ],
         },
       ],
@@ -75,23 +78,38 @@ export default {
     },
     handleCheckChange() {
       const { get_idArray } = useHooks();
-      this.nodes = this.$refs.tree.getCheckedNodes();
-      get_idArray(this.nodes);
+      // this.nodes = this.$refs.tree.getCheckedNodes();
+      let nodes = this.$refs.tree.getCheckedNodes();
+      let ids = nodes.map((item)=> {
+        return {
+          id: item.id,
+          id_control: item.label
+        }
+      })
+      // console.log(ids );
+      get_idArray(ids);
+
       // this.$store.dispatch('GET_idArray', this.nodes);
       // this.nodes = this.$refs.tree.getCheckedNodes().concat(this.$refs.tree.getHalfCheckedNodes());
+
     },
 
     handleClick() {
       const { set_curPosition } = useHooks();
       let node = this.$refs.tree.getCurrentNode();
-      // this.posi = node.position;
-      set_curPosition(node.position);
+
+      // set_curPosition(node.position);
+      set_curPosition([node.longitude,node.latitude]);
       // this.$store.dispatch('SET_CURPOSITION', this.posi);
     },
   },
   created() {
     // getAllDevice();
+    // console.log(this.$store.state.allInfos);
   },
+  mounted(){
+    // console.log(this.$store.state.allInfos);
+  }
 };
 </script>
 
