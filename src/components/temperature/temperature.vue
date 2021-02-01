@@ -20,10 +20,10 @@
     data(){
       return {
         myChart: null,
-        arr: ['能见度', '湿度', '温度'],
-        current: 1,
-        arr1: [120, 132, 101, 134, 90, 230, 210],
-        arr2: [820, 932, 901, 934, 1290, 1330, 1320],
+        arr: ['温度', '能见度', '湿度'],
+        current: 0,
+        arr1: [18, 22, 40, 35, 32, 26, 39],
+        arr2: [3500, 3325, 4688, 5558, 4610, 3666, 3845],
         arr3: [150, 232, 201, 154, 190, 330, 410]
       }
     },
@@ -37,9 +37,8 @@
             this.myChart.setOption({
               series: [
                 {
-                  name: '邮件营销',
+                  name: '温度数据',
                   type: 'line',
-                  stack: '总量',
                   data: this.arr1
                 }
               ]
@@ -49,9 +48,8 @@
             this.myChart.setOption({
               series: [
                 {
-                  name: '邮件营销',
+                  name: '能见度',
                   type: 'line',
-                  stack: '总量',
                   data: this.arr2
                 }
               ]
@@ -61,9 +59,8 @@
             this.myChart.setOption({
               series: [
                 {
-                  name: '邮件营销',
+                  name: '湿度数据',
                   type: 'line',
-                  stack: '总量',
                   data: this.arr3
                 }
               ]
@@ -77,7 +74,7 @@
         this.myChart = this.$echarts.init(this.$refs.linebox);
         this.myChart.setOption({
           title: {
-            text: '折线图堆叠',
+            text: '折线图展示',
             left: 'center',
             textStyle: {
               color: '#fff'
@@ -105,35 +102,47 @@
           },
           series: [
             {
-              name: '邮件营销',
+              name: '温度数据',
               type: 'line',
-              stack: '总量',
-              data: this.arr1
+              lineStyle: {
+                color: "#00d887",
+                width: 2
+              },
+              //填充区域
+              areaStyle: {
+                color: new this.$echarts.graphic.LinearGradient(
+                  0,
+                  0,
+                  0,
+                  1,
+                  [
+                    {
+                      offset: 0,
+                      color: "rgba(1, 132, 213, 0.4)" // 渐变色的起始颜色
+                    },
+                    {
+                      offset: 0.8,
+                      color: "rgba(1, 132, 213, 0.1)" // 渐变线的结束颜色
+                    }
+                  ],
+                  false
+                ),
+                shadowColor: "rgba(0, 0, 0, 0.1)"
+              },
+              symbol: "circle",
+              // 拐点大小
+              symbolSize: 8,
+              // 开始不显示拐点， 鼠标经过显示
+              showSymbol: false,
+              // 设置拐点颜色以及边框
+              itemStyle: {
+                color: "#0184d5",
+                borderColor: "rgba(221, 220, 107, .1)",
+                borderWidth: 12
+              },
+              data: this.arr2
             },
-            // {
-            //   name: '联盟广告',
-            //   type: 'line',
-            //   stack: '总量',
-            //   data: [220, 182, 191, 234, 290, 330, 310]
-            // },
-            // {
-            //   name: '视频广告',
-            //   type: 'line',
-            //   stack: '总量',
-            //   data: [150, 232, 201, 154, 190, 330, 410]
-            // },
-            // {
-            //   name: '直接访问',
-            //   type: 'line',
-            //   stack: '总量',
-            //   data: [320, 332, 301, 334, 390, 330, 320]
-            // },
-            // {
-            //   name: '搜索引擎',
-            //   type: 'line',
-            //   stack: '总量',
-            //   data: [820, 932, 901, 934, 1290, 1330, 1320]
-            // }
+
           ]
         })
       }

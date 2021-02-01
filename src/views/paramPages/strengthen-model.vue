@@ -27,21 +27,22 @@
 
 <script>
 import { setParam } from '../../utils/utils';
+
   export default {
      data(){
       return {
         arr: [
           {
-            url: require("../../assets/paramSet/red_blink.png"), text: "红灯常亮"
-          },
-          {
             url: require("../../assets/paramSet/yellow_blink.png"), text: "黄灯常亮"
           },
           {
-            url: require("../../assets/paramSet/blink.png"), text: "混色常亮"
+            url: require("../../assets/paramSet/red_blink.png"), text: "红灯常亮"
+          },
+          {
+            url: require("../../assets/paramSet/green_blink.png"), text: "绿灯常亮"
           },
         ],
-        lightness: 0,
+        lightness: 10,
         marks: {
           0: '0%',
           30: '30%',
@@ -62,7 +63,7 @@ import { setParam } from '../../utils/utils';
       this.currentId = index;
     },
     clickBtn(){
-
+      let axiosArr = [];
       let ids = this.$store.state.idArray;
       ids.forEach(element => {
         let param = {
@@ -74,17 +75,20 @@ import { setParam } from '../../utils/utils';
               "mode": 1,
               "param": {
                 "level": this.lightness, 
-                "gp": this.currentId + 1              //1--红  2--黄  3--红黄 绿   实测·
+                "gp": this.currentId + 1              
               }
           }
           }
         }
-        console.log(param);
+        // console.log(param);
         // setParam(param);
-        this.$http.setDevice(param);
+        axiosArr.push(this.$http.setDevice(param));
       });
       // 669681003
-      
+      // console.log(axiosArr);
+      this.$axios.all(axiosArr).then((res) => {
+        console.log(res);
+      }).catch(err => console.log(err))
       // setParam(param);
 
       // let res = this.$http.setDevice(param);
@@ -92,12 +96,13 @@ import { setParam } from '../../utils/utils';
       //   console.log(res);
       // })
       // console.log(param);
-      this.$notify({
-        title: '成功',
-        message: '设置成功~',
-        // offset: 200,
-        type: 'success'
-      });
+
+      // this.$notify({
+      //   title: '成功',
+      //   message: '设置成功~',
+      //   // offset: 200,
+      //   type: 'success'
+      // });
     }
   }
 }

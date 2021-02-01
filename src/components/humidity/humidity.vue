@@ -13,7 +13,7 @@
         let myChart = this.$echarts.init(this.$refs.linebox2);
         myChart.setOption({
           title: {
-            text: '某站点用户访问来源',
+            text: '某站点车辆信息',
             // subtext: '纯属虚构',
             left: 'center',
             textStyle: {
@@ -33,16 +33,16 @@
           },
           series: [
             {
-              name: '访问来源',
+              name: '车辆信息',
               type: 'pie',
               radius: '50%',
               top: 160,
               data: [
-                  {value: 1048, name: '搜索引擎'},
-                  {value: 735, name: '直接访问'},
-                  {value: 580, name: '邮件营销'},
-                  {value: 484, name: '联盟广告'},
-                  {value: 300, name: '视频广告'}
+                  {value: 1048, name: '小轿车'},
+                  {value: 735, name: '货车'},
+                  {value: 580, name: '集装车'},
+                  {value: 484, name: '面包车'},
+                  {value: 300, name: '客运车'}
               ],
               emphasis: {
                   itemStyle: {

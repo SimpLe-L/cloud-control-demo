@@ -1,4 +1,3 @@
-import { Option } from 'element-ui';
 import { getDeviceData, getAllDevice, setDevice } from '../api/api';
 import store from '../store';
 
@@ -74,18 +73,25 @@ function merge(arr, arr2){
   })
   return mergeObj;
 }
-//参数设置
-function setParam(){
-  let setMode = {
-    id: 669681003,
+//模式设置
+function setMode({id, id_control}){
+  let curMode = store.state.curMode;
+  if (curMode == 5) {
+    curMode = 3;
+  }
+  let modeParams = {
+    // id: 669681003,
+    id: id,
     data: {
       "cmd":1000,
-      "id": 1190967555,
+      // "id": 1190967555,
+      "id": id_control,
       "buff":{
-        "mode": 1
+        "mode": curMode
       }
     }
   }
+  // console.log(modeParams);
   try {
     setDevice(setMode).then(res => {
       console.log('模式成功',res);
@@ -97,12 +103,12 @@ function setParam(){
 
 }
 
-//设置模式
-function setMode(){
+//设置参数
+function setParam(params){
 
   try {
-    setDevice(setMode).then(res => {
-      console.log('模式成功',res);
+    setDevice(params).then(res => {
+      console.log('参数成功',res);
      
     })
   } catch (error) {
@@ -116,5 +122,6 @@ export {
   getDevice,
   flat,
   merge,
+  setMode,
   setParam
 }

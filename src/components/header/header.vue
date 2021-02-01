@@ -56,6 +56,7 @@ header {
     transform: translate(0, -50%);
     font-size: 20px;
     margin-right: 10px;
+    color: rgba(255, 255, 255, 0.7);
   }
 }
 </style>

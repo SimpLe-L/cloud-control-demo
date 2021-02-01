@@ -13,6 +13,8 @@
           <div slot="mode-text">{{ item.text }}</div>
         </control-item>
       </div>
+      <el-button type="primary" round   @click="btnClick">模式设定</el-button>
+      
     </div>
   </div>
 </template>
@@ -20,6 +22,7 @@
 <script>
 import ControlItem from "./control-item.vue";
 import { useHooks } from "../../hooks/index";
+import { setMode } from '../../utils/utils';
 export default {
   data() {
     return {
@@ -48,6 +51,22 @@ export default {
       // this.currentId = index;
       // this.$store.dispatch('SET_CURMODE', index);
     },
+
+    btnClick(){
+      let ids = this.$store.state.idArray;
+      let axiosArr = [];
+      ids.forEach(item => {
+        axiosArr.push(setMode({
+          id: item.id,
+          id_control: item.id_control
+        }))
+      });
+      
+      this.$axios.all(axiosArr).then((res) => {
+        console.log(res);
+      }).catch(err => console.log(err))
+
+    }
   },
   components: {
     ControlItem,
@@ -121,5 +140,9 @@ export default {
       vertical-align: middle;
     }
   }
+}
+
+/deep/ .el-button--primary{
+  width: 100px;
 }
 </style>

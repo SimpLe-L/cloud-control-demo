@@ -37,23 +37,23 @@
 </template>
 
 <script>
-import { setParam } from '../../utils/utils';
+import { setMode } from '../../utils/utils';
 
 export default {
   data() {
     return {
       arr: [
         {
-          url: require("../../assets/paramSet/red_blink.png"),
-          text: "红色灯带",
-        },
-        {
           url: require("../../assets/paramSet/yellow_blink.png"),
           text: "黄色灯带",
         },
         {
-          url: require("../../assets/paramSet/blink.png"),
-          text: "混色灯带",
+          url: require("../../assets/paramSet/red_blink.png"),
+          text: "红色灯带",
+        },
+        {
+          url: require("../../assets/paramSet/green_blink.png"),
+          text: "绿色灯带",
         },
       ],
       lightness: 0,
@@ -90,7 +90,7 @@ export default {
       // this.getAllDevice();
       // console.log(this.$store.state.allInfos);
       // this.getInfos(669681003);
-      setParam();
+      setMode();
     },
     // async getAllDevice(){
     //   const data = await this.$http.getAllDevice();

@@ -102,10 +102,10 @@ export default {
       });
 
       _this.showInfos.open(this.map, e.target.getPosition());
-      _this.$refs.InfoWindow.initialize({
-        infowindow: _this.showInfos,
-        tar: e.target
-      });
+      // _this.$refs.InfoWindow.initialize({
+      //   infowindow: _this.showInfos,
+      //   tar: e.target
+      // });
     },
     infoClose(){
       let _this = this;

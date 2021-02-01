@@ -43,16 +43,16 @@
       return {
         arr: [
           {
-            url: require("../../assets/paramSet/red_blink.png"), text: "红灯闪烁"
-          },
-          {
             url: require("../../assets/paramSet/yellow_blink.png"), text: "黄灯闪烁"
           },
           {
-            url: require("../../assets/paramSet/blink.png"), text: "红黄闪烁"
+            url: require("../../assets/paramSet/red_blink.png"), text: "红灯闪烁"
+          },
+          {
+            url: require("../../assets/paramSet/green_blink.png"), text: "绿灯闪烁"
           },
         ],
-        lightness: 0,
+        lightness: 10,
         frequency: 0,
         currentId: 0,
         marks: {
@@ -79,25 +79,40 @@
         this.currentId = index;
       },
       clickBtn(){
-        let param = {
-        "cmd": 1002,
-        "id": 66666,
-        "buff":{
-          "mode": 2,
-          "param": {
-            "level": this.lightness,
-            "blink": this.frequency,
-            "gp": this.currentId + 1              //1--红  2--黄  3--红黄
+
+        let axiosArr = [];
+        let ids = this.$store.state.idArray;
+        ids.forEach(element => {
+          let param = {
+            id: parseInt(element.id),
+            data:{
+              "cmd": 1002,
+              "id": parseInt(element.id_control),
+              "buff":{
+                "mode": 2,
+                "param": {
+                  "level": this.lightness, 
+                  "blink": this.frequency,
+                  "gp": this.currentId + 1              //1--红  2--黄  3--红黄 绿   实测·
+                }
+            }
+            }
           }
-        }
-      }
-      console.log(param);
-        this.$notify({
-          title: '成功',
-          message: '设置成功~',
-          // offset: 200,
-          type: 'success'
+          // console.log(param);
+          // setParam(param);
+          axiosArr.push(this.$http.setDevice(param));
         });
+
+        this.$axios.all(axiosArr).then((res) => {
+        console.log(res);
+      }).catch(err => console.log(err))
+
+        // this.$notify({
+        //   title: '成功',
+        //   message: '设置成功~',
+        //   // offset: 200,
+        //   type: 'success'
+        // });
       }
     }
   }

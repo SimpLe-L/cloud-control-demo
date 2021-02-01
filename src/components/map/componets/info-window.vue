@@ -34,12 +34,12 @@ export default {
   },
 
   methods: {
-    initialize(e){
-      this.tar = e.target;
-      this.infowindow = e.infowindow;
-      console.log('111',this.tar);
-      console.log('222',this.infowindow);
-    }
+    // initialize(e){
+    //   this.tar = e.target;
+    //   this.infowindow = e.infowindow;
+    //   console.log('111',this.tar);
+    //   console.log('222',this.infowindow);
+    // }
   },
   mounted(){
     // this.initialize()
