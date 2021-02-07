@@ -22,7 +22,7 @@ const updateDevice = deviceId => {
 // 设备命令 POST /v1/synccmds?device_id=524092364&timeout=30
 const setDevice = params => {
   // return axios.post('/v1/synccmds?device_id=628579624&timeout=10', params);
-  return axios.post(`/v1/synccmds?device_id=${params.id}&timeout=10`, params.data)
+  return axios.post(`/v1/synccmds?device_id=${params.id}&timeout=15`, params.data)
 }
 // 查询设备镜像 GET /mqtt/v1/devices/{device_id}/image
 

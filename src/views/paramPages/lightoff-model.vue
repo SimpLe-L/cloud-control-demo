@@ -10,22 +10,34 @@
 <script>
   export default {
     methods: {
-       clickBtn(){
-        let param = {
-        "cmd": 1002,
-        "id": 66666,
-        "buff":{
-          "mode": 3,
-          "param": {
+      clickBtn(){
+        let axiosArr = [];
+        let ids = this.$store.state.idArray;
+
+        ids.forEach(item => {
+
+          let Params = {
+            // id: 669681003,
+            id: item.id,
+            // id: params.id,
+            data: {
+              "cmd":1000,
+              // "id": 1190967555,
+              "id": item.id_control,
+              // "id": params.data.id,
+              "buff":{
+                "mode": 3
+              }
+            }
           }
-        }
-      }
-      this.$notify({
-        title: '成功',
-        message: '设置成功~',
-        // offset: 200,
-        type: 'success'
-      });
+
+          axiosArr.push(this.$http.setDevice(Params));
+        });
+        
+         this.$axios.all(axiosArr).then((res) => {
+          console.log('关闭雾灯',res);
+        }).catch(err => console.log(err))
+       
       }
     }
   }

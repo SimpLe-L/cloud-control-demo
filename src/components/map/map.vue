@@ -8,6 +8,7 @@
 <script>
 import AMap from "AMap";
 import InfoWindow from "./componets/info-window";
+import lightoffModelVue from '../../views/paramPages/lightoff-model.vue';
 
 export default {
   components: {
@@ -73,13 +74,17 @@ export default {
         let temp = new AMap.Marker({
           position: new AMap.LngLat(item.longitude, item.latitude),
           icon: "https://webapi.amap.com/theme/v1.3/markers/n/mark_b.png",
-          title: `${item.label}`
+          title: `${item.label}`,
+          extData: {
+            ...item
+          }
         });
         temp.on("mouseover", this.showInfo);
         temp.on("mouseout", this.infoClose);
         
         list.push(temp);
       });
+      // console.log(list);
       this.map.add(list);
     },
     // 展示信息框
@@ -102,10 +107,9 @@ export default {
       });
 
       _this.showInfos.open(this.map, e.target.getPosition());
-      // _this.$refs.InfoWindow.initialize({
-      //   infowindow: _this.showInfos,
-      //   tar: e.target
-      // });
+      _this.$refs.InfoWindow.initialize({
+        infos: e.target.getExtData()
+      });
     },
     infoClose(){
       let _this = this;

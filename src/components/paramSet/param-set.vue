@@ -12,6 +12,7 @@ import GuideModel from "../../views/paramPages/guide-model";
 import CrashModel from "../../views/paramPages/crash-model";
 import LightoffModel from "../../views/paramPages/lightoff-model";
 import SavingModel from "../../views/paramPages/saving-model";
+import SetBoard from "../../views/paramPages/setboard";
 export default {
   components: {
     AutoModel,
@@ -20,6 +21,7 @@ export default {
     CrashModel,
     SavingModel,
     LightoffModel,
+    SetBoard
   },
   data() {
     return {
@@ -29,7 +31,9 @@ export default {
         "GuideModel",
         "CrashModel",
         "SavingModel",
+        "SetBoard",
         "LightoffModel",
+  
       ],
     };
   },
@@ -52,6 +56,7 @@ export default {
     display: block;
     text-align: center;
     // margin: 5px;
+    color: #F5EF65;
   }
 }
 </style>

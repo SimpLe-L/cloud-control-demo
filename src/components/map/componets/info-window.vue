@@ -3,18 +3,19 @@
   <el-card shadow="never" :body-style="{ padding: '0px' }" >
     <div class="wrapper">
       <div class="header">
-        <span>路段名字啊啊啊</span>
+        <span>路段名字随便取</span>
       </div>
       <div class="body">
         <div class="pic">
           <img src="@/assets/imgs/test.png" alt="">
         </div>
         <div class="infos">
-          <span>电量: 67%</span>
-          <span>模式：尾跟警示</span>
-          <span>亮度：50%</span>
-          <span>闪烁频率：60次/分</span>
-          <span>桩号：k22+300</span>
+          <span>电量: {{voltage}}</span>
+          <!-- <span>{{voltage}}</span> -->
+          <span>模式：{{mode}}</span>
+          <span>亮度：{{brightness}}</span>
+          <span>闪烁频率：{{frequency}}次/分</span>
+          <span>桩号：{{mileage}}</span>
         </div>
       </div>
     </div>
@@ -27,19 +28,28 @@
 export default {
   data() {
     return {
-      voltage: 0,
-      tar: null,
-      infowindow: null
+      voltage: '',
+      mode: '',
+      frequency: '',
+      brightness: '',
+      mileage: 'k11+228'
     };
   },
 
   methods: {
-    // initialize(e){
-    //   this.tar = e.target;
-    //   this.infowindow = e.infowindow;
-    //   console.log('111',this.tar);
-    //   console.log('222',this.infowindow);
-    // }
+    initialize(infos){
+      this.voltage = infos.infos.voltage; 
+      this.frequency = infos.infos.blink;
+      this.brightness = infos.infos.level;
+      this.voltage = infos.infos.voltage; 
+      if(infos.infos.mode == 2){
+        this.mode = '主动诱导';
+      }else if(infos.infos.mode == 1){
+        this.mode = '轮廓增强';
+      }else{
+        this.mode = '灭灯';
+      }
+    }
   },
   mounted(){
     // this.initialize()

@@ -73,7 +73,7 @@ function merge(arr, arr2){
   })
   return mergeObj;
 }
-//模式设置
+//模式设置 
 function setMode({id, id_control}){
   let curMode = store.state.curMode;
   if (curMode == 5) {
@@ -88,14 +88,15 @@ function setMode({id, id_control}){
       "id": id_control,
       "buff":{
         "mode": curMode
+        // "mode": 1
       }
     }
   }
-  // console.log(modeParams);
+
   try {
-    setDevice(setMode).then(res => {
-      console.log('模式成功',res);
-     
+    setDevice(modeParams).then(res => {
+      // setDevice(params)
+      console.log('模式设置',res);
     })
   } catch (error) {
     console.log(error);
@@ -108,12 +109,68 @@ function setParam(params){
 
   try {
     setDevice(params).then(res => {
-      console.log('参数成功',res);
-     
+      console.log('参数成功',res);   
     })
   } catch (error) {
     console.log(error);
   }
+}
+
+
+//模式参数设置
+
+function setLightParams (params){
+  let curMode = store.state.curMode;
+  if (curMode == 5) {
+    curMode = 3;
+  }
+  // 模式参数
+  let modeParams = {
+    id: params.id,
+    data: {
+      "cmd":1000,
+      "id": params.data.id,
+      "buff":{
+        "mode": curMode
+      }
+    }
+  }
+
+  try {
+    setDevice(modeParams).then(res => {
+      setDevice(params);
+    })
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+//上下行设置
+
+function setBoard ({id, id_control, board}){
+  let Params = {
+    // id: 669681003,
+    id: id,
+    // id: params.id,
+    data: {
+      "cmd":1013,
+      // "id": 1190967555,
+      "id": id_control,
+      // "id": params.data.id,
+      "buff":{
+        "board": board
+      }
+    }
+  }
+
+  try {
+    setDevice(Params).then(res => {
+      // setDevice(params);
+      console.log(res);
+    })
+  } catch (error) {
+    console.log(error);
+}
 }
 
 export {
@@ -123,5 +180,7 @@ export {
   flat,
   merge,
   setMode,
-  setParam
+  setParam,
+  // setLightParams,
+  setBoard
 }

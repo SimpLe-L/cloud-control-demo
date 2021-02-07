@@ -38,6 +38,7 @@ export default {
           url: require("../../assets/controlBar/saving.png"),
           text: "节能模式",
         },
+        { url: require("../../assets/controlBar/board.png"), text: "方向控制" },
         { url: require("../../assets/controlBar/close.png"), text: "关闭雾灯" },
       ],
       currentId: 0,
@@ -54,17 +55,25 @@ export default {
 
     btnClick(){
       let ids = this.$store.state.idArray;
+      // console.log(ids);
+   
       let axiosArr = [];
       ids.forEach(item => {
         axiosArr.push(setMode({
           id: item.id,
           id_control: item.id_control
         }))
+
       });
       
       this.$axios.all(axiosArr).then((res) => {
-        console.log(res);
-      }).catch(err => console.log(err))
+        this.$message({
+            message: '模式设置成功',
+            type: 'success'
+          });
+      }, error => {
+        this.$message.error('模式设置失败');
+      })
 
     }
   },
@@ -129,6 +138,7 @@ export default {
     font-size: 20px;
     display: block;
     text-align: center;
+    color: #F5EF65;
   }
   .controlbar {
     margin-top: 20px;

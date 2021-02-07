@@ -71,6 +71,7 @@
     display: block;
     text-align: center;
     // margin: 5px;
+    color: #F5EF65;
   }
 }
 </style>

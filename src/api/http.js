@@ -1,6 +1,7 @@
 import axios from 'axios';
 import router from '../router';
 import store from '../store/index';
+import axiosRetry from 'axios-retry';
 
 /**
  * 跳转登录页
@@ -44,7 +45,8 @@ const errorHandle = (status, other) => {
 }
 
 // 创建axios实例
-const instance = axios.create({ timeout: 1000 * 12 })
+// const instance = axios.create({ timeout: 1000 * 12 })
+
 // 环境的切换
 if (process.env.NODE_ENV === 'development') {
   // 开发环境
@@ -71,6 +73,7 @@ axios.interceptors.request.use(
     // const token = window.sessionStorage.getItem('token')
     // token && (config.headers.Authorization = token)
     const token = 'version=2018-10-31&res=products%2F371437&et=1631676076&method=md5&sign=IRyHqdl87kxFYKh3A0FvBg%3D%3D';
+    // const token = 'version=2018-10-31&res=products%2F371437&et=1893427200&method=sha1&sign=dugb0TqlaiHnhlNbPJbnJa3%2BhOM%3D';
     config.headers.Authorization = token;
     // config.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
     return config;
@@ -101,6 +104,27 @@ axios.interceptors.response.use(
     }
   }
 )
+
+
+axiosRetry(axios, {
+  retries   : 3, // number of retries
+  retryDelay: (retryCount) => {
+     return retryCount * 1000; // time interval between retries
+  },
+  // retryCondition: (error) => {
+  //       // if retry condition is not specified, by default idempotent requests are retried
+  //       return error.response.errno === 15;
+  // },
+  
+//  retryCondition: (error) => {
+//   //true为打开自动发送请求，false为关闭自动发送请求
+//   if (error.message.includes("timeout")) {
+//     return true;
+//   } else {
+//     return false;
+//   };
+// }
+});
 
 export default axios;
 // Authorization:

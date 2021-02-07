@@ -40,9 +40,9 @@
       </div>
     </section>
 
-    <div class="infoBox" @click="dialogTableVisible = true" >
+    <!-- <div class="infoBox" @click="dialogTableVisible = true">
       <info-box />
-    </div>
+    </div> -->
     <!-- 信息框 -->
     <div class="dialog">
       <el-dialog title="警告信息汇总表" :visible.sync="dialogTableVisible">
@@ -123,13 +123,13 @@ export default {
       });
       // console.log( this.deviceInfo);
       Promise.all(arr).then((res) => {
+        // console.log(res);
         // const { get_allInfos } = useHooks();
         let arr = flat(res);
         let allDeviceInfo = merge(arr, arr2);
+        // console.log(allDeviceInfo);
         localStorage.setItem('devicesList', JSON.stringify(allDeviceInfo));
         // localStorage.setItem('devicesList', allDeviceInfo);
-        // get_allInfos(allDeviceInfo);
-        // console.log(this.$store.state.allInfos);
       });
     },
 
@@ -184,8 +184,55 @@ export default {
       //   })
     // },
   },
+  directives: {
+    drag(el, bindings) {
+      el.onmousedown = function(e) {
+        var disx = e.pageX - el.offsetLeft
+        var disy = e.pageY - el.offsetTop
+        document.onmousemove = function (e) {
+          el.style.left = e.pageX - disx + 'px'
+          el.style.top = e.pageY - disy + 'px'
+        }
+        document.onmouseup = function(e) {
+          document.onmousemove = document.onmouseup = null;
+          // el.style.left = e.pageX - disx + 'px'
+          // el.style.top = e.pageY - disy + 'px'
+        }
+      }
+    }
+
+
+        // drag: {
+        //     // 指令的定义
+        //     bind: function(el) {
+        //         let oDiv = el;  // 获取当前元素
+        //         oDiv.onmousedown = (e) => {
+        //             let ev = e || window.event;
+        //             // 算出鼠标相对元素的位置
+        //             let disX = ev.clientX - oDiv.offsetLeft;
+        //             let disY = ev.clientY - oDiv.offsetTop;
+        //             e.stopPropagation();
+        //             document.onmousemove = (e) => {
+        //                 // 用鼠标的位置减去鼠标相对元素的位置，得到元素的位置
+        //                 let ev = e || window.event;
+        //                 let left = ev.clientX - disX;
+        //                 let top = ev.clientY - disY;
+
+        //                 oDiv.style.left = left + 'px';
+        //                 oDiv.style.top = top + 'px';
+                        
+        //             };
+
+        //             document.onmouseup = (e) => {
+        //                 document.onmousemove = null;
+        //                 document.onmouseup = null;
+        //             }
+        //         }
+        //     }
+        // }
+    },
   created() {
-    this.getAllInfos();
+    // this.getAllInfos();
     // this.getPosition();
   },
   mounted(){

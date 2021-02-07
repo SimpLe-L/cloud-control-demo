@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <span>主动引导模式</span>
+    <!-- <span>主动引导模式</span> -->
     <div class="blinkPics">
       <div 
       class="picItem"
@@ -18,6 +18,11 @@
       <el-slider v-model="lightness" :step="10" show-stops  class="slider" :max="100" :marks="marks">
     </el-slider>
     </div>
+    <!-- <div class="board">
+      <span>上下行</span>
+      <el-slider v-model="board" :step="1" show-stops  class="slider" :max="2" :marks="marks2">
+    </el-slider>
+    </div> -->
     <div class="blink">
       <span>闪烁频率</span>
       <el-select v-model="frequency" placeholder="请选择">
@@ -38,6 +43,8 @@
 </template>
 
 <script>
+import { setLightParams, setParam } from '../../utils/utils';
+
   export default {
     data(){
       return {
@@ -53,8 +60,9 @@
           },
         ],
         lightness: 10,
-        frequency: 0,
+        frequency: 60,
         currentId: 0,
+        board: 0,
         marks: {
           0: '0%',
           30: '30%',
@@ -66,6 +74,11 @@
           },
           70: '70%',
           100: '100%'
+        },
+        marks2: {
+          0: '上行',
+          1: '下行',
+          2: '双'
         },
         options: [
           {value: 30,label: '30次/分'},
@@ -79,33 +92,39 @@
         this.currentId = index;
       },
       clickBtn(){
-
         let axiosArr = [];
         let ids = this.$store.state.idArray;
         ids.forEach(element => {
           let param = {
-            id: parseInt(element.id),
+            id: element.id,
             data:{
               "cmd": 1002,
-              "id": parseInt(element.id_control),
+              "id": element.id_control,
               "buff":{
                 "mode": 2,
                 "param": {
                   "level": this.lightness, 
                   "blink": this.frequency,
-                  "gp": this.currentId + 1              //1--红  2--黄  3--红黄 绿   实测·
+                  "gp": this.currentId + 1             
                 }
             }
             }
           }
           // console.log(param);
           // setParam(param);
-          axiosArr.push(this.$http.setDevice(param));
+          // axiosArr.push(this.$http.setDevice(param));
+          axiosArr.push(setParam(param));
         });
 
-        this.$axios.all(axiosArr).then((res) => {
-        console.log(res);
-      }).catch(err => console.log(err))
+      this.$axios.all(axiosArr).then((res) => {
+        // console.log(res);
+         this.$message({
+          message: '诱导参数设置成功',
+          type: 'success'
+        });
+      }).catch(err => {
+        this.$message.error('诱导参数设置失败');
+      })
 
         // this.$notify({
         //   title: '成功',
@@ -146,7 +165,7 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    margin-top: 20px;
+    // margin-top: 20px;
     cursor: pointer;
     img {
       width: 60px;
@@ -171,8 +190,8 @@
 
   .btn {
     display: flex;
-    justify-content: center;
-    margin-top: 30px;
+    justify-content: center; 
+    margin-top: 10px;
   }
 }
 /deep/ .el-button--primary{

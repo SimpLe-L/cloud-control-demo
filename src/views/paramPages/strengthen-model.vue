@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <span>轮廓增强模式</span>
+    <!-- <span>轮廓增强模式</span> -->
     <div class="blinkPics">
       <div 
       class="picItem"
@@ -18,7 +18,11 @@
       <el-slider v-model="lightness" :step="10" show-stops  class="slider" :max="100" :marks="marks">
     </el-slider>
     </div>
-
+    <!-- <div class="board">
+      <span>上下行</span>
+      <el-slider v-model="board"  show-stops  class="slider" :max="2" :marks="marks2">
+    </el-slider>
+    </div> -->
     <div class="btn">
        <el-button type="primary" round @click="clickBtn">参数设定</el-button>
     </div>
@@ -26,7 +30,7 @@
 </template>
 
 <script>
-import { setParam } from '../../utils/utils';
+import { setLightParams, setParam } from '../../utils/utils';
 
   export default {
      data(){
@@ -43,6 +47,7 @@ import { setParam } from '../../utils/utils';
           },
         ],
         lightness: 10,
+        board: 0,
         marks: {
           0: '0%',
           30: '30%',
@@ -54,6 +59,11 @@ import { setParam } from '../../utils/utils';
           },
           70: '70%',
           100: '100%'
+        },
+        marks2: {
+          0: '上行',
+          1: '下行',
+          2: '双'
         },
         currentId: 0
     }
@@ -67,28 +77,34 @@ import { setParam } from '../../utils/utils';
       let ids = this.$store.state.idArray;
       ids.forEach(element => {
         let param = {
-          id: parseInt(element.id),
+          id: element.id,
           data:{
             "cmd": 1002,
-            "id": parseInt(element.id_control),
+            "id": element.id_control,
             "buff":{
               "mode": 1,
               "param": {
                 "level": this.lightness, 
                 "gp": this.currentId + 1              
               }
-          }
+            }
           }
         }
-        // console.log(param);
-        // setParam(param);
-        axiosArr.push(this.$http.setDevice(param));
+
+        // axiosArr.push(this.$http.setDevice(param));
+        axiosArr.push(setParam(param));
       });
       // 669681003
       // console.log(axiosArr);
       this.$axios.all(axiosArr).then((res) => {
-        console.log(res);
-      }).catch(err => console.log(err))
+        // console.log(res);
+        this.$message({
+          message: '强化参数设置成功',
+          type: 'success'
+        });
+      }).catch(err => {
+        this.$message.error('强化参数设置失败');
+      })
       // setParam(param);
 
       // let res = this.$http.setDevice(param);
@@ -136,7 +152,7 @@ import { setParam } from '../../utils/utils';
     display: flex;
     justify-content: space-around;
     align-items: center;
-    margin-top: 20px;
+    // margin-top: 20px;
     cursor: pointer;
     img {
       width: 60px;
